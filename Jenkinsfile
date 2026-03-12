@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Varunkedar003/blue-green.git'
+                git branch: 'main', url: 'https://github.com/Varunkedar003/blue-green.git'
             }
         }
 
