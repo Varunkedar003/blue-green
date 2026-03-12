@@ -34,5 +34,11 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Green Server') {
+            steps {
+                sh 'ansible-playbook ansible/deploy-green.yml -i ansible/inventory.ini'
+            }
+        }
     }
 }
