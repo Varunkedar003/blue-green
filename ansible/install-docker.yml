@@ -1,0 +1,29 @@
+---
+- hosts: blue,green
+  become: true
+
+  tasks:
+    - name: update apt
+      apt:
+        update_cache: yes
+
+    - name: Install docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: start docker
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: add ubuntu user to docker greoup
+      user:
+        name: ubuntu
+        group: docker
+        append: yes
+
+
+
