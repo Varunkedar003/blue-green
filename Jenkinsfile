@@ -36,10 +36,12 @@ pipeline {
         }
 
         stage('Deploy to Green Server') {
-    steps {
-        sh '''
-        ANSIBLE_HOST_KEY_CHECKING=False \
-        ansible-playbook ansible/deploy-green.yml -i ansible/inventory.ini
-        '''
+            steps {
+                sh '''
+                ANSIBLE_HOST_KEY_CHECKING=False \
+                ansible-playbook ansible/deploy-green.yml -i ansible/inventory.ini
+                '''
+            }
+        }
     }
 }
