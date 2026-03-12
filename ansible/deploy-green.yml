@@ -1,0 +1,19 @@
+---
+- hosts: green
+  become: true
+
+  tasks:
+
+  - name: Pull latest Docker image
+    command: docker pull varunmb/blue-green-app
+
+  - name: Stop existing container
+    command: docker stop bluegreen-app
+    ignore_errors: yes
+
+  - name: Remove existing container
+    command: docker rm bluegreen-app
+    ignore_errors: yes
+
+  - name: Run new container
+    command: docker run -d -p 5000:5000 --name bluegreen-app varunmb/blue-green-app
