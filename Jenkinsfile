@@ -26,7 +26,6 @@ pipeline {
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS'
                 )]) {
-
                     sh '''
                     echo $PASS | docker login -u $USER --password-stdin
                     docker push $IMAGE_NAME
@@ -35,16 +34,27 @@ pipeline {
             }
         }
 
+        stage('Deploy to Green Server') {
+            steps {
+                sh '''
+                ANSIBLE_HOST_KEY_CHECKING=False \
+                ansible-playbook ansible/deploy-green.yml \
+                -i ansible/inventory.ini \
+                --private-key=/var/jenkins_home/ci-cd.pem
+                '''
+            }
+        }
+
         stage('Switch Traffic to Green') {
             steps {
                 sh '''
                 ssh -i /var/jenkins_home/ci-cd.pem ubuntu@13.201.192.75 << EOF
-                sudo sed -i 's/15.206.149.116/65.0.19.164/g' /etc/nginx/sites-available/default
+                sudo ln -sf /etc/nginx/conf.d/green.conf /etc/nginx/sites-enabled/default
                 sudo nginx -t
                 sudo systemctl reload nginx
                 EOF
                 '''
-          }
+            }
         }
     }
 }
