@@ -24,8 +24,7 @@ sudo ln -sf /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/default
 
 Reload nginx after switching traffic:
 
-sudo systemctl reload nginx
-Blue-Green Traffic Switching
+sudo systemctl reload nginx Blue-Green Traffic Switching
 
 Blue Environment
 
