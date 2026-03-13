@@ -35,9 +35,6 @@ def home():
                     margin: auto;
                     box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
                 }}
-                h2 {{
-                    color: #2c3e50;
-                }}
             </style>
         </head>
 
@@ -51,6 +48,11 @@ def home():
         </body>
     </html>
     """
+
+@app.route("/health")
+def health():
+    return {"status": "ok"}, 200
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
