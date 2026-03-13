@@ -48,7 +48,8 @@ pipeline {
         stage('Switch Traffic to Green') {
     steps {
         sh '''
-        ssh -i /var/jenkins_home/ci-cd.pem ubuntu@13.201.192.75 "sudo ln -sf /etc/nginx/conf.d/green.conf /etc/nginx/sites-enabled/default && sudo nginx -t && sudo systemctl reload nginx"
+        ssh -i /var/jenkins_home/ci-cd.pem ubuntu@13.201.192.75 \
+        "sudo sed -i 's/15.206.149.116/65.0.19.164/' /etc/nginx/sites-available/app.conf && sudo nginx -t && sudo systemctl reload nginx"
         '''
     }
 }
