@@ -46,15 +46,11 @@ pipeline {
         }
 
         stage('Switch Traffic to Green') {
-            steps {
-                sh '''
-                ssh -i /var/jenkins_home/ci-cd.pem ubuntu@13.201.192.75 << EOF
-                sudo ln -sf /etc/nginx/conf.d/green.conf /etc/nginx/sites-enabled/default
-                sudo nginx -t
-                sudo systemctl reload nginx
-                EOF
-                '''
-            }
-        }
+    steps {
+        sh '''
+        ssh -i /var/jenkins_home/ci-cd.pem ubuntu@13.201.192.75 "sudo ln -sf /etc/nginx/conf.d/green.conf /etc/nginx/sites-enabled/default && sudo nginx -t && sudo systemctl reload nginx"
+        '''
+    }
+}
     }
 }
